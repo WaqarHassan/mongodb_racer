@@ -2,7 +2,6 @@ class Racer
 	include ActiveModel::Model
 	attr_accessor :id, :number , :first_name , :last_name , :gender , :group , 	:secs
 	def initialize(params={})
-		puts "===========#{params.inspect}==========="
 		@id=params[:_id].nil? ? params[:id] : params[:_id].to_s
 		@number=params[:number].to_i
 		@first_name=params[:first_name]
@@ -30,9 +29,7 @@ class Racer
 		return doc.nil? ? nil : Racer.new(doc)
 	end
 	def save
-		# puts "---------------#{params.inspect}--------------"
 		result=self.class.collection.insert_one(_id:@id, number:@number, first_name:@first_name, last_name:@last_name, gender:@gender , group: @group, secs: @secs)
-		puts "--------#{result.inserted_id}---------------------"
 		@id=result.inserted_id.to_s #store just the string form of the _id
 	end
 	def update(params)
